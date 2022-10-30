@@ -34,9 +34,9 @@ function! ElixirAlternateFile()
 
   echo fileToOpen
 
-  if filereadable(fileToOpen)
-    exec(":e" . " " . fileToOpen)
-  else
-    echoerr "couldn't find file " . fileToOpen
-  endif
+  exec(":e" . " " . fileToOpen)
+  augroup Mkdir
+    autocmd!
+    autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
+  augroup END
 endfunction
